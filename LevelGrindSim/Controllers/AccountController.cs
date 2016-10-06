@@ -151,7 +151,7 @@ namespace LevelGrindSim.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, BirthDate = model.BirthDate, Weight = model.Weight, HeightInInches = model.HeightInInches };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

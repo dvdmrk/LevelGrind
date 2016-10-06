@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace LevelGrindSim.Models
@@ -79,6 +80,10 @@ namespace LevelGrindSim.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public DateTime BirthDate { get; set; }
+        public int Weight { get; set; }
+        public int HeightInInches { get; set; }
     }
 
     public class ResetPasswordViewModel
