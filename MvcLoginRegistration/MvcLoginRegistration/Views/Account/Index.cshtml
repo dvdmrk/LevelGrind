@@ -26,9 +26,11 @@
         <th>
             @Html.DisplayNameFor(model => model.Height)
         </th>
+        <th>THR</th>
    </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
@@ -45,6 +47,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Height)
         </td>
+        <td>
+            @{
+                int thr = 220 - item.Age;
+            }
+            @thr
+    </td>
     </tr>
 }
 
