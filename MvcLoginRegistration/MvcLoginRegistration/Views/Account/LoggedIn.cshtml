@@ -1,4 +1,4 @@
-﻿
+﻿@model MvcLoginRegistration.Models.UserAccount
 @{
     ViewBag.Title = "LoggedIn";
 }
@@ -7,5 +7,4 @@
 {
     <h4>Hello @Session["UserName"].ToString() @Session["UserID"]</h4>
 }
-
-
+<p>THR = @((220 - Model.Age) * .7)</p>

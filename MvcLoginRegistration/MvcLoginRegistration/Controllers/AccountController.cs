@@ -14,7 +14,7 @@ namespace MvcLoginRegistration.Controllers
         {
             using (OurDbContext db = new OurDbContext())
             {
-                return View(db.userAccount.ToList());
+                return View(db.userAccount.ToList().OrderBy( u => u.Age));
             }
         }
 
@@ -69,7 +69,12 @@ namespace MvcLoginRegistration.Controllers
         {
             if (Session["UserID"] != null)
             {
-                return View();
+
+                string userName = (string)(Session["UserName"]);
+                using (OurDbContext db = new OurDbContext())
+                {
+                    return View(db.userAccount.Where(u => u.UserName == userName).Select(u => u).Single());
+                }
             }
             else
             {

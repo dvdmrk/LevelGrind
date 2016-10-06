@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
 }
 
+
 <h2>Index</h2>
 
 <p>
@@ -14,46 +15,36 @@
         <th>
             @Html.DisplayNameFor(model => model.UserName)
         </th>
+
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            bmr 4 women
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Age)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Weight)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Height)
+            bmr 4 men
         </th>
         <th>THR</th>
-   </tr>
-
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Age)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Weight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Height)
-        </td>
-        <td>
-            @{
-                int thr = 220 - item.Age;
-            }
-            @thr
-    </td>
     </tr>
-}
+
+    @foreach (var item in Model)
+    {
+                   int thr = 220 - item.Age;
+            double bmrmen = 66 + (6.2 * item.Weight) + (12.7 * item.Height) - (6.76 * item.Age);
+            double bmrwom = 655.1 + (4.35 * item.Weight) + (4.7 * item.Height) - (4.7 * item.Age);
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+@bmrwom
+                </td>
+                <td>
+@bmrmen
+                </td>
+                <td>
+
+                    @thr
+                </td>
+            </tr>
+            }
 
 </table>
