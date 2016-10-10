@@ -43,6 +43,24 @@ namespace test.Controllers
             return RedirectToAction("Avatar");
         }
 
+        public ActionResult Gains()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Gains(RegisterViewModel weightloss)
+        {
+            var sess = (string)Session["UserName"];
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.UserName == sess);
+                user.CurrentWeight = weightloss.CurrentWeight;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Avatar");
+        }
+
         public ActionResult Avatar()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())

@@ -17,14 +17,20 @@
     int thr = Convert.ToInt32((220 - Age) * .7);
     int mhr = 220 - Age;
     int WeightLoss = Model.InitialWeight - Model.CurrentWeight;
+
+    var experience = ((Model.TrainingTotal % 63.4) / 63.4)*100;
 }
 <h4>@Model.Pseudonym</h4>
+<div class="expwrap">
+    <div class="expbar" style="width: @experience%"></div>
+</div>
 @if (WeightLoss > 0)
 {
     <p>Starting Weight</p>
-    <h4>@Model.InitialWeight</h4>
-    <p>Current Weight</p>
-    <h4>@Model.CurrentWeight</h4>
+    <h4>
+        @Model.InitialWeight<br />
+        @WeightLoss lbs lost so far!
+    </h4>
 }
 @if (Model.TrainingTotal >0)
 {

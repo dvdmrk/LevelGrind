@@ -29,3 +29,18 @@ textarea {
         display:none;
     }
 }
+.expwrap {
+    width:100%;
+  height:1.3em;
+  margin-top:1em !important;
+  background-image: url("https://www.transparenttextures.com/patterns/notebook-dark.png");
+  box-shadow: -1px 0px 6px .2px #6e6d6d;
+}
+.expbar {
+  background: #660000; /* Old browsers */
+background: -moz-linear-gradient(top, #660000 0%, #663030 49%, #660a0a 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #660000 0%,#663030 49%,#660a0a 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #660000 0%,#663030 49%,#660a0a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#660000', endColorstr='#660a0a',GradientType=0 ); /* IE6-9 */
+  height: 1.3em;
+}

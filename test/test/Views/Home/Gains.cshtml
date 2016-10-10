@@ -3,15 +3,14 @@
     ViewBag.Title = "Training";
 }
 
-@{ int WeightLoss = Model.InitialWeight - Model.CurrentWeight; }
 <h2>Training</h2>
 
-@using (Html.BeginForm("Training", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Gains", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.TrainingTotal, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.CurrentWeight, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.TrainingTotal, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.CurrentWeight, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
