@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Level Grind";
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>The AR-RP-FT</h2>
+        <p>
+            Level Grind is an augumented reality role playing, fitness tracker. I know that's a lot to take in at once, but give it a shot compete with yourself and the world, or party up and use the bounty system to train up and take down lifes biggest obsticle... Motivation!
+        </p>
+        @if (!Request.IsAuthenticated)
+        {
+            @Html.ActionLink("Register To Train", "Register", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-success" })
+        }
+    </div>
+</div>

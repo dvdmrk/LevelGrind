@@ -1,0 +1,33 @@
+﻿@model IEnumerable<test.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+
+<table>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Pseudonym)</th>
+        <th>@Html.DisplayNameFor(model => model.TrainingTotal)</th>
+        <th>Age</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Pseudonym)</td>
+            <td>@Html.DisplayFor(modelItem => item.TrainingTotal)</td>
+            <td>
+                @{
+                    int age = (
+                    Int32.Parse(DateTime.Today.ToString("yyyyMMdd")) -
+                    Int32.Parse(item.BirthDate.ToString("yyyyMMdd"))) / 10000;
+                }
+                @age
+            </td>
+        </tr>
+                    }
+</table>

@@ -1,0 +1,53 @@
+﻿@model test.Models.ApplicationUser
+@{
+    ViewBag.Title = "Avatar";
+}
+@{
+    //calculations
+    //Height
+    int Height = Model.Feet * 12 + Model.Inches;
+    int Age = (
+                    Int32.Parse(DateTime.Today.ToString("yyyyMMdd")) -
+                    Int32.Parse(Model.BirthDate.ToString("yyyyMMdd"))) / 10000;
+
+    double bmr = 66 + (6.23 * Model.CurrentWeight)
+        + (12.7 * Height) - (6.8 * Age);
+
+    double bmi = (Model.CurrentWeight / 2.2) / ((Height * .0254) * (Height * .0254));
+    int thr = Convert.ToInt32((220 - Age) * .7);
+    int mhr = 220 - Age;
+    int WeightLoss = Model.InitialWeight - Model.CurrentWeight;
+}
+<h4>@Model.Pseudonym</h4>
+@if (WeightLoss > 0)
+{
+    <p>Starting Weight</p>
+    <h4>@Model.InitialWeight</h4>
+    <p>Current Weight</p>
+    <h4>@Model.CurrentWeight</h4>
+}
+@if (Model.TrainingTotal >0)
+{
+    <p>Total Experience</p>
+    <h4>@Model.TrainingTotal</h4>
+}
+<h4>@Height inches</h4>
+<h4>@Age years old</h4>
+<h4>you can eat @bmr callories a day without even leaving the bed and never gain a pound.</h4>
+<h4>you are:
+    @if (bmi > 25)
+    {
+        <p> obease</p>
+    }
+    else if (bmi < 25 && bmi > 18.5)
+    {
+        <p> healthy</p>
+    }
+    else if (bmi < 18.5)
+    {
+        <p> under weight</p>
+    }
+</h4>
+<h4>a good exercise heart rate for you is: @thr</h4>
+<h4>do not exceed: @mhr heart rate</h4>
+
