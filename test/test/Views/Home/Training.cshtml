@@ -3,7 +3,6 @@
     ViewBag.Title = "Training";
 }
 
-@{ int WeightLoss = Model.InitialWeight - Model.CurrentWeight; }
 <h2>Training</h2>
 
 @using (Html.BeginForm("Training", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))

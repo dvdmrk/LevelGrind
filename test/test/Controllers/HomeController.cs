@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -33,10 +34,10 @@ namespace test.Controllers
         [HttpPost]
         public ActionResult Training(RegisterViewModel updatetraining)
         {
-            var sess = (string)Session["UserName"];
+            var userId = User.Identity.GetUserId();
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var user = db.Users.SingleOrDefault(u => u.UserName == sess);
+                var user = db.Users.SingleOrDefault(u => u.Id == userId);
                 user.TrainingTotal = user.TrainingTotal + updatetraining.TrainingTotal;
                 db.SaveChanges();
             }
@@ -51,10 +52,10 @@ namespace test.Controllers
         [HttpPost]
         public ActionResult Gains(RegisterViewModel weightloss)
         {
-            var sess = (string)Session["UserName"];
+            var userId = User.Identity.GetUserId();
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var user = db.Users.SingleOrDefault(u => u.UserName == sess);
+                var user = db.Users.SingleOrDefault(u => u.Id == userId);
                 user.CurrentWeight = weightloss.CurrentWeight;
                 db.SaveChanges();
             }
@@ -63,10 +64,22 @@ namespace test.Controllers
 
         public ActionResult Avatar()
         {
+            var userId = User.Identity.GetUserId();
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var sess = (string)Session["UserName"];
-                var user = db.Users.SingleOrDefault(u => u.UserName == sess);
+                var user = db.Users.SingleOrDefault(u => u.Id == userId);
+                ViewBag.Message = "Your application description page.";
+                return View(user);
+            }
+        }
+        
+        [HttpGet]
+        public ActionResult Avatar(string pseudonym)
+        {
+            var userId = pseudonym;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.Pseudonym == pseudonym);
                 ViewBag.Message = "Your application description page.";
                 return View(user);
             }

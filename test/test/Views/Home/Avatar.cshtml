@@ -32,6 +32,7 @@
         @WeightLoss lbs lost so far!
     </h4>
 }
+@Html.ActionLink("Have you lost weight?", "Gains", "Home", htmlAttributes: new { @class="btn btn-success" })
 @if (Model.TrainingTotal >0)
 {
     <p>Total Experience</p>

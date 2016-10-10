@@ -18,6 +18,12 @@ namespace test
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "PlaceHolder",
+                url: "{controller}/{action}/{pseudonym}",
+                defaults: new { controller = "Home", action = "Avatar", pseudonym = UrlParameter.Optional }
+            );
         }
     }
 }
