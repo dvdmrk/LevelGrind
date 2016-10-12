@@ -28,6 +28,11 @@ namespace test.Controllers
 
         public ActionResult Training()
         {
+            var userId = User.Identity.GetUserId();
+            if (userId == null)
+            {
+                return RedirectToAction("Index");
+            }
             return View();
         }
 
@@ -62,25 +67,35 @@ namespace test.Controllers
             return RedirectToAction("Avatar");
         }
 
-        public ActionResult Avatar()
-        {
-            var userId = User.Identity.GetUserId();
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                var user = db.Users.SingleOrDefault(u => u.Id == userId);
-                ViewBag.Message = "Your application description page.";
-                return View(user);
-            }
-        }
+        //public ActionResult Avatar()
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    using (ApplicationDbContext db = new ApplicationDbContext())
+        //    {
+        //        var user = db.Users.SingleOrDefault(u => u.Id == userId);
+        //        ViewBag.Message = "Your application description page.";
+        //        return View(user);
+        //    }
+        //}
         
         [HttpGet]
         public ActionResult Avatar(string pseudonym)
         {
             var userId = pseudonym;
+
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var user = db.Users.SingleOrDefault(u => u.Pseudonym == pseudonym);
-                ViewBag.Message = "Your application description page.";
+                if (userId == null)
+                {
+                    userId = User.Identity.GetUserId();
+                    if (userId == null)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    var uesr = db.Users.SingleOrDefault(u => u.Id == userId);
+                    return View(uesr);
+                }
+                var user = db.Users.SingleOrDefault(u => u.Pseudonym == userId);
                 return View(user);
             }
         }

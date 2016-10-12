@@ -1,33 +1,54 @@
 ﻿@model IEnumerable<test.Models.ApplicationUser>
 
 @{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Ranking";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
-
-<p>Use this area to provide additional information.</p>
-
-<table>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.Pseudonym)</th>
-        <th>@Html.DisplayNameFor(model => model.TrainingTotal)</th>
-        <th>Age</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.Pseudonym)</td>
-            <td>@Html.DisplayFor(modelItem => item.TrainingTotal)</td>
-            <td>
-                @{
-                    int age = (
-                    Int32.Parse(DateTime.Today.ToString("yyyyMMdd")) -
-                    Int32.Parse(item.BirthDate.ToString("yyyyMMdd"))) / 10000;
-                }
-                @age
-            </td>
-        </tr>
-                    }
-</table>
+@{
+    int i = 1;
+}
+<div class="row col-md-7">
+    <h2>
+        <i class="fa fa-trophy brand"></i>
+        <div class="pull-right">
+            Avatar Ladder
+        </div>
+    </h2>
+</div>
+<div class="row">
+    <div class="col-md-7 well well-lg">
+        <p>Experience is earned in the gym, and on the battle field. See how much experience you can attain</p>
+    </div>
+</div>
+    <div class="col-md-7">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="hidden-xs">Rank:</th>
+                    <th>Avatar:</th>
+                    <th>Experience:</th>
+                    <th class="hidden-xs">Age:</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="hidden-xs">@i</td>
+                    <td>
+                        <a href="/Home/Avatar?pseudonym=@item.Pseudonym">@Html.DisplayFor(modelItem => item.Pseudonym)</a>
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.TrainingTotal)</td>
+                    <td class="hidden-xs">
+                        @{
+                            int age = (
+                            Int32.Parse(DateTime.Today.ToString("yyyyMMdd")) -
+                            Int32.Parse(item.BirthDate.ToString("yyyyMMdd"))) / 10000;
+                            i++;
+                        }
+                        @age
+                    </td>
+                </tr>
+                            }
+        </table>
+    </div>
+    <div class="container">
+    </div>

@@ -3,19 +3,34 @@
     ViewBag.Title = "Training";
 }
 
-<h2>Training</h2>
-
-@using (Html.BeginForm("Training", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.TrainingTotal, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.TrainingTotal, new { @class = "form-control" })
+<div class="row col-md-7">
+    <h3>
+        <i class="fa fa-heartbeat brand" aria-hidden="true"></i>
+        <div class="pull-right">
+            Training Duration
         </div>
+    </h3>
+</div>
+<div class="row">
+    <div class="well well-lg col-md-7">
+        <p>Experience is earned in the gym, and on the battle field. See how much experience you can attain before going to the great b-ball court in the sky. Valhalla!</p>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Training" />
-        </div>
+    <div class="col-md-7">
+        @using (Html.BeginForm("Training", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.TrainingTotal, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.TrainingTotal, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Training" />
+                </div>
+            </div>
+        }
     </div>
-}
+</div>
+<div class="container">
+</div>

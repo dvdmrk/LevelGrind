@@ -1,6 +1,32 @@
 ﻿@model test.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
+
+    var selectListFeet = new[]
+    {
+        new SelectListItem() { Value = "Select", Text = "Select", Selected = true, Disabled = true },
+        new SelectListItem() { Value = "4", Text = "4 Feet", Selected = false },
+        new SelectListItem() { Value = "5", Text = "5 Feet", Selected = false },
+        new SelectListItem() { Value = "6", Text = "6 Feet", Selected = false },
+        new SelectListItem() { Value = "7", Text = "7 Feet", Selected = false },
+    };
+    var selectListInches = new[]
+    {
+        new SelectListItem() { Value = "Select", Text = "Select", Selected = true, Disabled = true },
+        new SelectListItem() { Value = "0", Text = "0 Inches", Selected = false },
+        new SelectListItem() { Value = "1", Text = "1 Inches", Selected = false },
+        new SelectListItem() { Value = "2", Text = "2 Inches", Selected = false },
+        new SelectListItem() { Value = "3", Text = "3 Inches", Selected = false },
+        new SelectListItem() { Value = "4", Text = "4 Inches", Selected = false },
+        new SelectListItem() { Value = "5", Text = "5 Inches", Selected = false },
+        new SelectListItem() { Value = "6", Text = "6 Inches", Selected = false },
+        new SelectListItem() { Value = "7", Text = "7 Inches", Selected = false },
+        new SelectListItem() { Value = "8", Text = "8 Inches", Selected = false },
+        new SelectListItem() { Value = "9", Text = "9 Inches", Selected = false },
+        new SelectListItem() { Value = "10", Text = "10 Inches", Selected = false },
+        new SelectListItem() { Value = "11", Text = "11 Inches", Selected = false },
+        new SelectListItem() { Value = "12", Text = "12 Inches", Selected = false },
+    };
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -12,7 +38,7 @@
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(m => m.Pseudonym, new { @class = "col-md-2 control-label" })
+        <label class="col-md-2 control-label" for="pseudonym">Avatar Name</label>
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Pseudonym, new { @class = "form-control" })
         </div>
@@ -23,47 +49,47 @@
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Feet, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Feet, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Feet, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Feet, selectListFeet, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Inches, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Inches, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Inches, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Inches, selectListInches, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.InitialWeight, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.InitialWeight, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.InitialWeight, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.InitialWeight, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.BirthDate, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.BirthDate, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control datepicker" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
         </div>
-    </div>
 }
 
 @section Scripts {
