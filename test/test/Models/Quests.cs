@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
 namespace test.Models
 {
+
+    public class GroupDbContext : DbContext
+    {
+        public DbSet<Quests> Group { get; set; }
+    }
+
     [Table("Quests")]
     public class Quests
     {

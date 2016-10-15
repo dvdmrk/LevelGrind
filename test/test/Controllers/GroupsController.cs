@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using test.Models;
@@ -85,6 +86,11 @@ namespace test.Controllers
         public ActionResult CreateQuest(Quests quest)
         {
             var userId = User.Identity.GetUserId();
+            var gq = new Quests();
+            gq.Quest = quest.Quest;
+            gq.Time = quest.Time;
+            gq.Date = quest.Date;
+            gq.AmOrPm = quest.AmOrPm;
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 var user = db.Users.SingleOrDefault(u => u.Id == userId);
@@ -92,15 +98,8 @@ namespace test.Controllers
                 var group = user.Group;
                 using (GroupDbContext dbc = new GroupDbContext())
                 {
-                    Quests gq = new Quests
-                    {
-                        GroupName = group,
-                        UserName = username,
-                        Quest = quest.Quest,
-                        Date = quest.Date,
-                        Time = quest.Time,
-                        AmOrPm = quest.AmOrPm,
-                    };
+                    gq.GroupName = group;
+                    gq.UserName = username;
                     dbc.Group.Add(gq);
                     dbc.SaveChanges();
                 }

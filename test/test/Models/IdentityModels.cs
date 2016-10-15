@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Data.Entity.ModelConfiguration;
 
 namespace test.Models
 {
@@ -37,15 +38,9 @@ namespace test.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
-    }
-
-    public class GroupDbContext : DbContext
-    {
-        public DbSet<Quests> Group { get; set; }
     }
 }
