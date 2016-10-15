@@ -44,9 +44,9 @@
         <h4>Starting Weight:</h4>
         <p>@Model.InitialWeight</p>
         <h4>Start Date:</h4>
-        <p></p>
+        <p>@Html.ValueFor(model => model.StartDate, "{0:MM/dd/yyyy}")</p>
         <h4>Last Trained:</h4>
-        <p></p>
+        <p>@Html.ValueFor(model => model.LastTrainedOn, "{0:MM/dd/yyyy}")</p>
         @if (WeightLoss > 0)
         {
             <h4>Weight Lost:</h4>
@@ -76,5 +76,6 @@
         {
             <p>@Model.Pseudonym is a Small character. Naturally posessing an aptitude for speed. While small characters can with training achieve 2.4 attacks per second, they lack in defense and if not receiving proper nutrition may experience random fatigue.</p>
         }
+        <center><a href="https://www.facebook.com/sharer/sharer.php?u=levelgrind.xyz/home/Avatar?pseudonym=@Model.Pseudonym" target="_blank">Share on Facebook</a></center>
     </div>
 </div>

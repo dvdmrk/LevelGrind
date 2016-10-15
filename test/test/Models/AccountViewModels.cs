@@ -102,6 +102,12 @@ namespace test.Models
         [Required]
         [Display(Name = "Date of Birth")]
         public DateTime BirthDate { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime? LastTrainedOn { get; set; }
+
+        public string Group { get; set; }
     }
 
     public class ResetPasswordViewModel

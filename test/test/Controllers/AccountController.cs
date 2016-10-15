@@ -163,6 +163,7 @@ namespace test.Controllers
                     CurrentWeight = model.InitialWeight,
                     TrainingTotal = 0,
                     BirthDate = model.BirthDate,
+                    StartDate = DateTime.Now,
                 };
                 Session["UserName"] = model.Email;
                 var result = await UserManager.CreateAsync(user, model.Password);

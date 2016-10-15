@@ -44,6 +44,7 @@ namespace test.Controllers
             {
                 var user = db.Users.SingleOrDefault(u => u.Id == userId);
                 user.TrainingTotal = user.TrainingTotal + updatetraining.TrainingTotal;
+                user.LastTrainedOn = DateTime.Now;
                 db.SaveChanges();
             }
             return RedirectToAction("Avatar");

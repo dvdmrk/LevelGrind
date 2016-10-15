@@ -10,6 +10,7 @@ namespace test.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public string Group { get; set; }
         public DateTime BirthDate { get; set; }
         public string Pseudonym { get; set; }
         public int Feet { get; set; }
@@ -17,7 +18,8 @@ namespace test.Models
         public int InitialWeight { get; set; }
         public int CurrentWeight { get; set; }
         public int TrainingTotal { get; set; }
-
+        public DateTime StartDate { get; set; }
+        public DateTime? LastTrainedOn { get; set; }
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -40,5 +42,10 @@ namespace test.Models
         {
             return new ApplicationDbContext();
         }
+    }
+
+    public class GroupDbContext : DbContext
+    {
+        public DbSet<Quests> Group { get; set; }
     }
 }
