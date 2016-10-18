@@ -9,21 +9,27 @@ using System.Web;
 namespace test.Models
 {
 
-    public class GroupDbContext : DbContext
+    public class QuestDBContext : DbContext
     {
-        public DbSet<Quests> Group { get; set; }
+        public DbSet<Quest> Quests { get; set; }
+
+        public QuestDBContext()
+        {
+            Database.SetInitializer<QuestDBContext>(
+                new DropCreateDatabaseIfModelChanges<QuestDBContext>()
+                );
+        }
     }
 
+
+
     [Table("Quests")]
-    public class Quests
+    public class Quest
     {
         [Key]
         public int QuestsId { get; set; }
         public string UserName { get; set; }
         public string GroupName { get; set; }
-        public string Quest { get; set; }
         public DateTime Date { get; set; }
-        public int Time { get; set; }
-        public string AmOrPm { get; set; }
     }
 }

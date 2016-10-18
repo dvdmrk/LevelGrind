@@ -1,21 +1,16 @@
-﻿@model IEnumerable<test.Models.Quests>
+﻿@model IEnumerable<test.Models.Quest>
 
 @{
     ViewBag.Title = "Quests";
 }
 
 <h2>Quests</h2>
-
-@foreach (var item in Model)
-{
-    <p>@item.UserName requires your aid in @item.Quest at @item.Time @item.AmOrPm on @item.Date</p>
-
-            @Html.DisplayFor(modelItem => item.Quest)
-
-            @Html.DisplayFor(modelItem => item.Date)
-
-            @Html.DisplayFor(modelItem => item.Time)
-
-            @Html.DisplayFor(modelItem => item.AmOrPm)
-
-}
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-7 well well-lg">
+            <p>@item.UserName requires your aid in @item.Date</p>
+        </div>
+    }
+</div>
+@Html.ActionLink("Create a quest", "CreateQuest")

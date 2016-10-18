@@ -66,11 +66,11 @@ namespace test.Controllers
             {
                 var user = db.Users.SingleOrDefault(u => u.Id == userid);
                 var group = user.Group;
-                using (GroupDbContext dbc = new GroupDbContext())
+                using (QuestDBContext dbc = new QuestDBContext())
                 {
-                    var GroupMessages = dbc.Group.Where(u => u.GroupName == group)
+                    var GroupMessages = dbc.Quests.Where(u => u.GroupName == group)
                         .OrderBy(u => u.Date)
-                        .Select(u => u.Date >= DateTime.Now)
+                        .Where(u => u.Date >= DateTime.Now)
                         .ToList();
                     return View(GroupMessages);
                 }
@@ -79,28 +79,25 @@ namespace test.Controllers
 
         public ActionResult CreateQuest()
         {
-            return View();
+            return View(new Quest() { Date = DateTime.Now.Date });
         }
 
         [HttpPost]
-        public ActionResult CreateQuest(Quests quest)
+        public ActionResult CreateQuest(Quest quest)
         {
             var userId = User.Identity.GetUserId();
-            var gq = new Quests();
-            gq.Quest = quest.Quest;
-            gq.Time = quest.Time;
+            var gq = new Quest();
             gq.Date = quest.Date;
-            gq.AmOrPm = quest.AmOrPm;
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 var user = db.Users.SingleOrDefault(u => u.Id == userId);
                 var username = user.UserName;
                 var group = user.Group;
-                using (GroupDbContext dbc = new GroupDbContext())
+                using (QuestDBContext dbc = new QuestDBContext())
                 {
                     gq.GroupName = group;
                     gq.UserName = username;
-                    dbc.Group.Add(gq);
+                    dbc.Quests.Add(gq);
                     dbc.SaveChanges();
                 }
                 return RedirectToAction("Quests");
