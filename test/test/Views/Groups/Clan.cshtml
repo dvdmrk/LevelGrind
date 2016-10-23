@@ -26,7 +26,7 @@
             <tr>
                 <th class="hidden-xs">Rank:</th>
                 <th>Avatar:</th>
-                <th>Experience:</th>
+                <th>Quest Points:</th>
                 <th class="hidden-xs">Level:</th>
             </tr>
         </thead>
@@ -40,7 +40,7 @@
                 <td>
                     <a href="/Home/Avatar?pseudonym=@item.Pseudonym">@Html.DisplayFor(modelItem => item.Pseudonym)</a>
                 </td>
-                <td>@Html.DisplayFor(modelItem => item.TrainingTotal)</td>
+                <td>@Html.DisplayFor(modelItem => item.QuestPoints)</td>
                 <td class="hidden-xs">
                     @{
                         level = (int)((item.TrainingTotal / 63.4) + 1);
@@ -50,6 +50,7 @@
             </tr>
                         }
     </table>
+    <center>@Html.ActionLink("Create a Quest", "CreateQuest", "Group")</center>
 </div>
 <div class="container">
 </div>

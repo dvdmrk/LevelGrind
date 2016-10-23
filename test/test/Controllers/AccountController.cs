@@ -22,7 +22,7 @@ namespace test.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +34,9 @@ namespace test.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -121,7 +121,7 @@ namespace test.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -160,37 +160,38 @@ namespace test.Controllers
                     ModelState.AddModelError("Registered", "Username taken.");
                 }
             }
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser()
                 {
-                    var user = new ApplicationUser()
-                    {
-                        Pseudonym = model.Pseudonym,
-                        UserName = model.Pseudonym,
-                        Email = model.Email,
-                        Feet = model.Feet,
-                        Inches = model.Inches,
-                        InitialWeight = model.InitialWeight,
-                        CurrentWeight = model.InitialWeight,
-                        TrainingTotal = 0,
-                        BirthDate = model.BirthDate,
-                        StartDate = DateTime.Now,
-                    };
-                    Session["UserName"] = model.Email;
-                    var result = await UserManager.CreateAsync(user, model.Password);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    Pseudonym = model.Pseudonym,
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Feet = model.Feet,
+                    Inches = model.Inches,
+                    InitialWeight = model.InitialWeight,
+                    CurrentWeight = model.InitialWeight,
+                    TrainingTotal = 0,
+                    BirthDate = model.BirthDate,
+                    StartDate = DateTime.Now,
+                    QuestPoints = 0,
+                };
+                Session["UserName"] = model.Email;
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                        // Send an email with this link
-                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("Index", "Home");
-                    }
-                    AddErrors(result);
+                    return RedirectToAction("Index", "Home");
                 }
+                AddErrors(result);
+            }
 
             // If we got this far, something failed, redisplay form
             return View(model);

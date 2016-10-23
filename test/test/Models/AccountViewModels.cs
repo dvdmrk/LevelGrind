@@ -108,6 +108,8 @@ namespace test.Models
         public DateTime? LastTrainedOn { get; set; }
 
         public string Group { get; set; }
+
+        public int QuestPoints { get; set; }
     }
 
     public class ResetPasswordViewModel
