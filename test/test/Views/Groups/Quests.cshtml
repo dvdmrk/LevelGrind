@@ -6,11 +6,26 @@
 
 <h2>Quests</h2>
 <div class="row">
-    @foreach (var item in Model)
+    @foreach (var quest in Model)
     {
-        <div class="col-md-7 well well-lg">
-            <p>@item.UserName requires your aid in @item.Date</p>
-        </div>
+        if (quest.Date == DateTime.Now.Date)
+        {
+            <div class="col-md-7 well well-lg">
+                <p>@quest.UserName requires your aid in battle Today!</p>
+            </div>
+        }
+        else if (quest.Date == DateTime.Now.Date.AddDays(1))
+        {
+            <div class="col-md-7 well well-lg">
+                <p>@quest.UserName requires your aid in battle Tomorrow!</p>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-7 well well-lg">
+                <p>@quest.UserName requires your aid in battle on: @quest.Date.ToString("MMMM dd")</p>
+            </div>
+        }
     }
 </div>
 @Html.ActionLink("Create a quest", "CreateQuest")

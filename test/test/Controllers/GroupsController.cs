@@ -23,6 +23,7 @@ namespace test.Controllers
             {
                 var usergroup = db.Users.SingleOrDefault(u => u.Id == userId);
                 var group = usergroup.Group;
+                ViewBag.Group = group;
                 if (group != null)
                 {
                     var user = db.Users.ToList().OrderByDescending(u => u.TrainingTotal).Where(u => u.Group == group);
@@ -56,6 +57,7 @@ namespace test.Controllers
 
         public ActionResult Quests()
         {
+            var yesterday = DateTime.Now.AddDays(-1);
             var userId = User.Identity.GetUserId();
             if (userId == null)
             {
@@ -70,7 +72,7 @@ namespace test.Controllers
                 {
                     var GroupMessages = dbc.Quests.Where(u => u.GroupName == group)
                         .OrderBy(u => u.Date)
-                        .Where(u => u.Date >= DateTime.Now)
+                        .Where(u => u.Date >= yesterday)
                         .ToList();
                     return View(GroupMessages);
                 }
@@ -91,7 +93,7 @@ namespace test.Controllers
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 var user = db.Users.SingleOrDefault(u => u.Id == userId);
-                var username = user.UserName;
+                var username = user.Pseudonym;
                 var group = user.Group;
                 using (QuestDBContext dbc = new QuestDBContext())
                 {

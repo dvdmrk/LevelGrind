@@ -5,12 +5,13 @@
 }
 @{
     int i = 1;
+    int level;
 }
 <div class="row col-md-7">
     <h2>
         <i class="fa fa-trophy brand"></i>
         <div class="pull-right">
-            Avatar Ladder
+            @ViewBag.Group
         </div>
     </h2>
 </div>
@@ -26,25 +27,25 @@
                 <th class="hidden-xs">Rank:</th>
                 <th>Avatar:</th>
                 <th>Experience:</th>
-                <th class="hidden-xs">Age:</th>
+                <th class="hidden-xs">Level:</th>
             </tr>
         </thead>
         @foreach (var item in Model)
             {
             <tr>
                 <td class="hidden-xs">@i</td>
+                @{
+                    i++;
+                }
                 <td>
                     <a href="/Home/Avatar?pseudonym=@item.Pseudonym">@Html.DisplayFor(modelItem => item.Pseudonym)</a>
                 </td>
                 <td>@Html.DisplayFor(modelItem => item.TrainingTotal)</td>
                 <td class="hidden-xs">
                     @{
-                        int age = (
-                        Int32.Parse(DateTime.Today.ToString("yyyyMMdd")) -
-                        Int32.Parse(item.BirthDate.ToString("yyyyMMdd"))) / 10000;
-                        i++;
+                        level = (int)((item.TrainingTotal / 63.4) + 1);
                     }
-                    @age
+                    @level
                 </td>
             </tr>
                         }

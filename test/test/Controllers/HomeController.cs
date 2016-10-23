@@ -16,6 +16,11 @@ namespace test.Controllers
             return View();
         }
 
+        public ActionResult Tavern()
+        {
+            return View();
+        }
+
         public ActionResult Ranking()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -39,15 +44,33 @@ namespace test.Controllers
         [HttpPost]
         public ActionResult Training(RegisterViewModel updatetraining)
         {
-            var userId = User.Identity.GetUserId();
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            if (updatetraining.TrainingTotal > 0 && updatetraining.TrainingTotal <= 60)
             {
-                var user = db.Users.SingleOrDefault(u => u.Id == userId);
-                user.TrainingTotal = user.TrainingTotal + updatetraining.TrainingTotal;
-                user.LastTrainedOn = DateTime.Now;
-                db.SaveChanges();
+                var userId = User.Identity.GetUserId();
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    var user = db.Users.SingleOrDefault(u => u.Id == userId);
+                    if (user.LastTrainedOn == DateTime.Now.Date)
+                    {
+                        ViewBag.Message = "Invalid";
+                        ViewBag.Details = "Cannot train more than once per day, while that does encourage real life results, it causes in game errors. Sorry";
+                        return View();
+                    }
+                    else
+                    {
+                        user.TrainingTotal = user.TrainingTotal + updatetraining.TrainingTotal;
+                        user.LastTrainedOn = DateTime.Now.Date;
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("Avatar");
             }
-            return RedirectToAction("Avatar");
+            else
+            {
+                ViewBag.Message = "Invalid";
+                ViewBag.Details = "Cannot train for durations of 0 or less. This may have also occured because while training durations greater than 60 minutes result in real life results, they cause in game errors. Sorry";
+                return View();
+            }
         }
 
         public ActionResult Gains()
@@ -58,14 +81,23 @@ namespace test.Controllers
         [HttpPost]
         public ActionResult Gains(RegisterViewModel weightloss)
         {
-            var userId = User.Identity.GetUserId();
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            if (weightloss.CurrentWeight > 0)
             {
-                var user = db.Users.SingleOrDefault(u => u.Id == userId);
-                user.CurrentWeight = weightloss.CurrentWeight;
-                db.SaveChanges();
+                var userId = User.Identity.GetUserId();
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    var user = db.Users.SingleOrDefault(u => u.Id == userId);
+                    user.CurrentWeight = weightloss.CurrentWeight;
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Avatar");
             }
-            return RedirectToAction("Avatar");
+            else
+            {
+                ViewBag.Message = "Invalid";
+                ViewBag.Details = "You seriously can't weigh less than 0 pounds...";
+                return View();
+            }
         }
 
         //public ActionResult Avatar()
@@ -78,7 +110,7 @@ namespace test.Controllers
         //        return View(user);
         //    }
         //}
-        
+
         [HttpGet]
         public ActionResult Avatar(string pseudonym)
         {

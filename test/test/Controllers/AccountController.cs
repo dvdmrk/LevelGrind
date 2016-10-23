@@ -150,37 +150,47 @@ namespace test.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var user = new ApplicationUser()
+                var taken = db.Users.Where(u => u.Pseudonym == model.Pseudonym).Count();
+                if (taken == 1)
                 {
-                    Pseudonym = model.Pseudonym,
-                    UserName = model.Email,
-                    Email = model.Email,
-                    Feet = model.Feet,
-                    Inches = model.Inches,
-                    InitialWeight = model.InitialWeight,
-                    CurrentWeight = model.InitialWeight,
-                    TrainingTotal = 0,
-                    BirthDate = model.BirthDate,
-                    StartDate = DateTime.Now,
-                };
-                Session["UserName"] = model.Email;
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Message = "Invalid";
+                    ViewBag.Details = "Username Already Taken...";
+                    ModelState.AddModelError("Registered", "Username taken.");
                 }
-                AddErrors(result);
             }
+                if (ModelState.IsValid)
+                {
+                    var user = new ApplicationUser()
+                    {
+                        Pseudonym = model.Pseudonym,
+                        UserName = model.Pseudonym,
+                        Email = model.Email,
+                        Feet = model.Feet,
+                        Inches = model.Inches,
+                        InitialWeight = model.InitialWeight,
+                        CurrentWeight = model.InitialWeight,
+                        TrainingTotal = 0,
+                        BirthDate = model.BirthDate,
+                        StartDate = DateTime.Now,
+                    };
+                    Session["UserName"] = model.Email;
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
+                }
 
             // If we got this far, something failed, redisplay form
             return View(model);

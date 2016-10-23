@@ -15,6 +15,12 @@
     <div class="well well-lg col-md-7">
         <p>Experience is earned in the gym, and on the battle field. See how much experience you can attain before going to the great b-ball court in the sky. Valhalla!</p>
     </div>
+    @if (ViewBag.Message=="Invalid")
+    {
+        <div class="col-md-7">
+            <div class="alert alert-danger">@ViewBag.Details</div>
+        </div>
+    }
     <div class="col-md-7">
         @using (Html.BeginForm("Training", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {

@@ -231,6 +231,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\dwarf.png" />
+    <Content Include="Content\dwarf2.png" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Content\bootstrap-datepicker3.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -293,6 +295,7 @@
     <Content Include="Views\Groups\Create.cshtml" />
     <Content Include="Views\Groups\Quests.cshtml" />
     <Content Include="Views\Groups\CreateQuest.cshtml" />
+    <Content Include="Views\Home\Tavern.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

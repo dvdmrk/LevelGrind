@@ -30,6 +30,8 @@ namespace test.Models
         public int QuestsId { get; set; }
         public string UserName { get; set; }
         public string GroupName { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
     }
 }

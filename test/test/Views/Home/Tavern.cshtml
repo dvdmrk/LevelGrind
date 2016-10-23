@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Tavern";
+}
+
+<h2>Tavern</h2>
+
+<div class="row">
+    <div class="col-md-7 well">
+        <center>
+            <h2>Welcome to Valhalla Tap and Train.</h2>
+        </center>
+        <img style='float:left;width:250px; margin-right:10px;' src="~/Content/dwarf.png" />
+        <blockquote class="blockquote">
+            AYE HERO! Drink and listen, I'm going to give you the lay of the land.
+        </blockquote>
+        <h3>Ranking</h3>
+        <p>
+            We have a really simple ranking system, we rank every hero based on experience. This ladder keeps track of your success against other heroes. No one at this gym will steal your gains, but how would you feel if I told you, you receive a 60% bonus when training with a partner. That is completely false, but wouldn't it be cool? If you want to check out a heroes profile, just click on their name in the ranking system and you'll get to know more about them.
+        </p>
+        <h3>Training</h3>
+        <p>
+            Training is calculated based on the number of minutes you exercise. This number becomes your experience points. Your experience points dictate your level, and when your strong enough and I'm drunk enough eventually I'll set you up with a way to battle against your comrades. In the mean time you can think of it as a way to track your progress. The level system is based off of the idea that if you work out for 30 minutes a day, 4 days a week, at the end of 1 year you will be level 100. This accountability tracker is set up to allow just 1 training session a day for no duration greater than 60 minutes, so use it wisely. While working out twice a day or for more than an hour at a time does provide real life results, it causes in game errors. 
+        </p>
+        <h3>Quests</h3>
+        <p>
+            These are your way of letting your clan know your training and they help you link up with other trainers. This is the simplest way to call for backup at the gym without giving out too much information to your gym nemesis. After all, this is a secret gym, but that doesn't mean you can't connect with other trainers, share your results, and get together through other mediums. 
+        </p>
+        <h3>Clan</h3>
+        <p>
+            Your clan is your family, if a family wanted what was biggest for you instead of just to talk to you more and nag you about why both of your brothers are married with children and you haven't been on a real date in almost a decade. Once you join a clan you can post quests to the clan page. The lader on the clan page is specific to your clan and is counted based on the number of quests you post + the number of attendees. 
+        </p>
+        <h3>Avatar</h3>
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+            <h4>Experience Bar</h4>
+            <p>
+                The more you train and the harder you train the faster you'll level. This game is all about the end game level grind which only occurs after you've made a life style out exercise. When you first start working out you should expect to see something new in the mirror every 6 to 8 weeks, but when you reach the end game it could be months between new cuts or shaving minutes off your mile. Strive for pr's and remember the gains are on the way and the gods of Valhalla are smiling upon your fitness goals.
+            </p>
+            <h4>Avatar Metabolism</h4>
+            <p>
+                Your base calculation is how many calories you could eat without getting out of bed before you would start to gain weight. If you have a hard time gaining weight, you may want to double the intake of this number. If you have a hard time losing weight, it is recomended that you either stick with this calorie count and train hard, or subtract 500 calories from this calculation to lose a pound week. 
+            </p>
+            <h4>Hero Mass Index</h4>
+            <p>
+                This is based off of the body mass index which is a very sily calculation and doesn't really say anything for people who work out regularly. If you are buff and this says your obease, keep training and ignore it. For everyone else, try and get into the healthy range. 
+            </p>
+            <div class="col-md-11"><center><h4>All profiles are public and are sharable incase you're excited about your gains and you want the world to know.</h4></center></div>
+        </div>
+        @if (!Request.IsAuthenticated)
+            {
+            <center>@Html.ActionLink("Register To Train", "Register", "Account")</center>
+        }
+    </div>
+</div>
