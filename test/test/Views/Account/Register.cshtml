@@ -27,6 +27,12 @@
         new SelectListItem() { Value = "11", Text = "11 Inches", Selected = false },
         new SelectListItem() { Value = "12", Text = "12 Inches", Selected = false },
     };
+    var selectListGender = new[]
+    {
+        new SelectListItem() { Value = "Select", Text = "Select", Selected = true, Disabled = true },
+        new SelectListItem() { Value = "Male", Text = "Male", Selected = false },
+        new SelectListItem() { Value = "Female", Text = "Female", Selected = false },
+    };
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -77,6 +83,12 @@
         @Html.LabelFor(m => m.InitialWeight, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.InitialWeight, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.Gender, selectListGender, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

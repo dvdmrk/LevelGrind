@@ -22,6 +22,7 @@ namespace test.Models
         public DateTime StartDate { get; set; }
         public DateTime? LastTrainedOn { get; set; }
         public int QuestPoints { get; set; }
+        public string Gender { get; set; }
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

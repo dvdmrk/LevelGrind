@@ -9,73 +9,84 @@
     int Age = (
                     Int32.Parse(DateTime.Today.ToString("yyyyMMdd")) -
                     Int32.Parse(Model.BirthDate.ToString("yyyyMMdd"))) / 10000;
-
-    int bmr = (int)(66 + (6.23 * Model.CurrentWeight)
-        + (12.7 * Height) - (6.8 * Age));
-    int lbloss = bmr - 500;
-
+    int bmr;
+    if (Model.Gender == "Male")
+    {
+        bmr = (int)(66 + (6.23 * Model.CurrentWeight) + (12.7 * Height) - (6.8 * Age));
+    }
+    else
+    {
+        bmr = (int)(655 + (4.35 * Model.CurrentWeight) + (4.7 * Height) - (4.7 * Age));
+    }
     int bmi = (int)((Model.CurrentWeight / 2.2) / ((Height * .0254) * (Height * .0254)));
     int thr = Convert.ToInt32((220 - Age) * .7);
     int mhr = 220 - Age;
+    int lbloss = bmr - 500;
     int WeightLoss = Model.InitialWeight - Model.CurrentWeight;
-
     var experience = ((Model.TrainingTotal % 63.4) / 63.4) * 100;
     int level = (int)(Model.TrainingTotal / 63.4) + 1;
 }
+@if (TempData["Message"] != null)
+{
+    <div class="alert-success alert row col-md-7 container">
+        <h4>@TempData["Message"]</h4>
+    </div>
+}
 <div class="row col-md-7">
-    <h3>
-        <i class="fa fa-shield brand" aria-hidden="true"></i>
-        <div class="pull-right">
-            <span class="username"> @Model.Pseudonym</span><br />
-            Level: @level
+        <h3>
+            <i class="fa fa-shield brand" aria-hidden="true"></i>
+            <div class="pull-right">
+                <span class="username"> @Model.Pseudonym</span><br />
+                Level: @level
+            </div>
+        </h3>
+    </div>
+    <div class="col-md-7">
+        <div class="progress progress-striped active">
+            <div class="progress-bar" style="width: @experience%"></div>
         </div>
-    </h3>
-</div>
-<div class="col-md-7">
-    <div class="progress progress-striped active">
-        <div class="progress-bar" style="width: @experience%"></div>
+        <center><h4>Total Experience: @Model.TrainingTotal</h4></center>
     </div>
-    <center><h4>Total Experience: @Model.TrainingTotal</h4></center>
-</div>
-<div class="container col-md-7">
-</div>
-<div class="row">
-    <div class="col-md-7 well well-sm">
-        <h4>Starting Weight:</h4>
-        <p>@Model.InitialWeight</p>
-        <h4>Start Date:</h4>
-        <p>@Html.ValueFor(model => model.StartDate, "{0:MM/dd/yyyy}")</p>
-        <h4>Last Trained:</h4>
-        <p>@Html.ValueFor(model => model.LastTrainedOn, "{0:MM/dd/yyyy}")</p>
-        @if (WeightLoss > 0)
-        {
-            <h4>Weight Lost:</h4>
-            <p>@WeightLoss lbs</p>
-        }
-        @if (Model.UserName == User.Identity.Name)
-        {
-            <center>@Html.ActionLink("Update Weight", "Gains", "Home") </center>
-        }
-        <h4>Age ~ @Age</h4>
-        <p>For Optimal Gains, Avatar's heart rate should remain between @thr - @mhr during training.</p>
-
-        <h4>Avatar Metabolism ~ @bmr</h4>
-        <p>
-            Train hard and comsume @lbloss calories daily to lose 1lb/ week, or consume @(bmr + 500) daily to gain 1lb/ week.
-        </p>
-        <h4>Hero Mass Index ~ @bmi</h4>
-        @if (bmi > 25)
+    <div class="container col-md-7">
+    </div>
+    <div class="row">
+        <div class="col-md-7 well well-sm">
+            <h4>Starting Weight:</h4>
+            <p>@Model.InitialWeight</p>
+            <h4>Start Date:</h4>
+            <p>@Html.ValueFor(model => model.StartDate, "{0:MM/dd/yyyy}")</p>
+            <h4>Last Trained:</h4>
+            <p>@Html.ValueFor(model => model.LastTrainedOn, "{0:MM/dd/yyyy}")</p>
+            @if (WeightLoss > 0)
             {
-            <p>@Model.Pseudonym is a Large character. Naturally posessing an aptitude for strength and defense, however large characters naturally tend to have shorter life spans.</p>
-        }
-        else if (bmi < 25 && bmi > 18.5)
-        {
-            <p>@Model.Pseudonym is a Healthy character. Continued training will increase the chance of critical hits and roll's pertaining to luck.</p>
-        }
-        else if (bmi < 18.5)
-        {
-            <p>@Model.Pseudonym is a Small character. Naturally posessing an aptitude for speed. While small characters can with training achieve 2.4 attacks per second, they lack in defense and if not receiving proper nutrition may experience random fatigue.</p>
-        }
-        <center><a href="https://www.facebook.com/sharer/sharer.php?u=levelgrind.xyz/home/Avatar?pseudonym=@Model.Pseudonym" target="_blank">Share on Facebook</a></center>
+                <h4>Weight Lost:</h4>
+                <p>@WeightLoss lbs</p>
+            }
+            @if (Model.UserName == User.Identity.Name)
+            {
+                <center>@Html.ActionLink("Update Weight", "Gains", "Home") </center>
+            }
+            <h4>Age ~ @Age</h4>
+            <h4>Gender ~ @Model.Gender</h4>
+            <p>For Optimal Gains, Avatar's heart rate should remain between @thr - @mhr during training.</p>
+
+            <h4>Avatar Metabolism ~ @bmr</h4>
+            <p>
+                Train hard and comsume @lbloss calories daily to lose 1lb/ week, or consume @(bmr + 500) daily to gain 1lb/ week.
+            </p>
+            <h4>Hero Mass Index ~ @bmi</h4>
+            @if (bmi > 25)
+            {
+                <p>@Model.Pseudonym is a Large character. Naturally posessing an aptitude for strength and defense, however large characters naturally tend to have shorter life spans.</p>
+            }
+            else if (bmi < 25 && bmi > 18.5)
+            {
+                <p>@Model.Pseudonym is a Healthy character. Continued training will increase the chance of critical hits and roll's pertaining to luck.</p>
+            }
+            else if (bmi < 18.5)
+            {
+                <p>@Model.Pseudonym is a Small character. Naturally posessing an aptitude for speed. While small characters can with training achieve 2.4 attacks per second, they lack in defense and if not receiving proper nutrition may experience random fatigue.</p>
+            }
+            <center><a href="https://www.facebook.com/sharer/sharer.php?u=levelgrind.xyz/home/Avatar?pseudonym=@Model.Pseudonym" target="_blank">Share on Facebook</a></center>
+        </div>
     </div>
-</div>

@@ -175,6 +175,7 @@ namespace test.Controllers
                     BirthDate = model.BirthDate,
                     StartDate = DateTime.Now,
                     QuestPoints = 0,
+                    Gender = model.Gender,
                 };
                 Session["UserName"] = model.Email;
                 var result = await UserManager.CreateAsync(user, model.Password);

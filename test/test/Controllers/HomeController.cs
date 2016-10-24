@@ -58,9 +58,15 @@ namespace test.Controllers
                     }
                     else
                     {
+                        int beforelevel = (int)(user.TrainingTotal / 63.4) + 1;
                         user.TrainingTotal = user.TrainingTotal + updatetraining.TrainingTotal;
                         user.LastTrainedOn = DateTime.Now.Date;
                         db.SaveChanges();
+                        int afterlevel = (int)(user.TrainingTotal / 63.4) + 1;
+                        if (afterlevel > beforelevel)
+                        {
+                            TempData["Message"] = "Congradulations on your new baby! Pump baby that is... your family is getting bigger, and by family I mean arms. You have just leveled up and you're starting to scare people. I'm happy to call you my brotege!";
+                        }
                     }
                 }
                 return RedirectToAction("Avatar");
