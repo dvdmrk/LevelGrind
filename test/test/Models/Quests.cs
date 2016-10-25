@@ -9,17 +9,17 @@ using System.Web;
 namespace test.Models
 {
 
-    public class QuestDBContext : DbContext
-    {
-        public DbSet<Quest> Quests { get; set; }
+    //public class QuestDBContext : DbContext
+    //{
+    //    public DbSet<Quest> Quests { get; set; }
 
-        public QuestDBContext()
-        {
-            Database.SetInitializer<QuestDBContext>(
-                new DropCreateDatabaseIfModelChanges<QuestDBContext>()
-                );
-        }
-    }
+    //    public QuestDBContext()
+    //    {
+    //        Database.SetInitializer<QuestDBContext>(
+    //            new DropCreateDatabaseIfModelChanges<QuestDBContext>()
+    //            );
+    //    }
+    //}
 
 
 

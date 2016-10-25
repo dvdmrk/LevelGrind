@@ -40,6 +40,9 @@ namespace test.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        public DbSet<Quest> Quests { get; set; }
+        
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

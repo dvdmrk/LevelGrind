@@ -22,32 +22,30 @@ namespace test.Controllers
             }
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var usergroup = db.Users.SingleOrDefault(u => u.Id == userId);
-                var group = usergroup.Group;
+                var user = db.Users.SingleOrDefault(u => u.Id == userId);
+                var group = user.Group;
                 ViewBag.Group = group;
                 if (group != null)
                 {
-                    using (QuestDBContext dbc = new QuestDBContext())
+                    foreach (var hero in db.Users.ToList().Where(u => u.Group == group))
                     {
-                        foreach (var hero in db.Users.Where(u => u.Group == group))
+                        int alsoQuesting = 0;
+
+                        foreach (var item in db.Quests.Where(u => u.UserName == hero.Pseudonym))
                         {
-                            int alsoQuesting = 0;
-                            foreach (var item in dbc.Quests.Where(u => u.UserName == hero.Pseudonym))
+                            if (item.AlsoQuesting == null)
                             {
-                                if (item.AlsoQuesting == null)
-                                {
-                                    continue;
-                                }
-                                alsoQuesting = alsoQuesting + item.AlsoQuesting.Split(',').Length -1;
+                                continue;
                             }
-                            hero.QuestPoints = alsoQuesting + dbc.Quests.Where(u => u.UserName == hero.Pseudonym).Count();
+                            alsoQuesting = alsoQuesting + item.AlsoQuesting.Split(',').Length - 1;
                         }
+                        hero.QuestPoints = alsoQuesting + db.Quests.Where(u => u.UserName == hero.Pseudonym).Count();
                     }
                     db.SaveChanges();
-                    var user = db.Users.ToList()
+                    var users = db.Users.ToList()
                         .OrderByDescending(u => u.QuestPoints)
                         .Where(u => u.Group == group);
-                    return View(user);
+                    return View(users);
                 }
             }
             return RedirectToAction("Create");
@@ -94,14 +92,11 @@ namespace test.Controllers
                 }
                 else
                 {
-                    using (QuestDBContext dbc = new QuestDBContext())
-                    {
-                        var GroupMessages = dbc.Quests.Where(u => u.GroupName == group)
-                            .OrderBy(u => u.Date)
-                            .Where(u => u.Date >= yesterday)
-                            .ToList();
-                        return View(GroupMessages);
-                    }
+                    var GroupMessages = db.Quests.Where(u => u.GroupName == group)
+                        .OrderBy(u => u.Date)
+                        .Where(u => u.Date >= yesterday)
+                        .ToList();
+                    return View(GroupMessages);
                 }
             }
         }
@@ -122,45 +117,42 @@ namespace test.Controllers
                 var user = db.Users.SingleOrDefault(u => u.Id == userId);
                 var username = user.Pseudonym;
                 var group = user.Group;
-                using (QuestDBContext dbc = new QuestDBContext())
+                var alreadyAQuest = db.Quests.Where(u => u.Date == quest.Date).Count();
+                if (alreadyAQuest > 0)
                 {
-                    var alreadyAQuest = dbc.Quests.Where(u => u.Date == quest.Date).Count();
-                    if (alreadyAQuest > 0)
+                    var currentQuest = db.Quests.SingleOrDefault(u => u.Date == quest.Date);
+                    if (!(currentQuest.UserName.Equals(username)) && currentQuest.AlsoQuesting != null)
                     {
-                        var currentQuest = dbc.Quests.SingleOrDefault(u => u.Date == quest.Date);
-                        if (!(currentQuest.UserName.Equals(username)) && currentQuest.AlsoQuesting != null)
-                        {
-                            var alreadyInQuest = currentQuest.AlsoQuesting.Split(' ');
-                            var amIInQuest = alreadyInQuest.Where(u => u == username + ',').Count();
-                            if (amIInQuest > 0)
-                            {
-                                ViewBag.Message = "Invalid";
-                                ViewBag.Details = "You are already involved in this quest";
-                                return View();
-                            }
-                            currentQuest.AlsoQuesting = string.Join(" ", alreadyInQuest);
-                            currentQuest.AlsoQuesting = currentQuest.AlsoQuesting + " " + username + ", ";
-                            dbc.SaveChanges();
-                        }
-                        else if (!(currentQuest.UserName == username) && currentQuest.AlsoQuesting == null)
-                        {
-                            currentQuest.AlsoQuesting = currentQuest.AlsoQuesting + username + ", ";
-                            dbc.SaveChanges();
-                        }
-                        else
+                        var alreadyInQuest = currentQuest.AlsoQuesting.Split(' ');
+                        var amIInQuest = alreadyInQuest.Where(u => u == username + ',').Count();
+                        if (amIInQuest > 0)
                         {
                             ViewBag.Message = "Invalid";
                             ViewBag.Details = "You are already involved in this quest";
                             return View();
                         }
+                        currentQuest.AlsoQuesting = string.Join(" ", alreadyInQuest);
+                        currentQuest.AlsoQuesting = currentQuest.AlsoQuesting + " " + username + ", ";
+                        db.SaveChanges();
+                    }
+                    else if (!(currentQuest.UserName == username) && currentQuest.AlsoQuesting == null)
+                    {
+                        currentQuest.AlsoQuesting = currentQuest.AlsoQuesting + username + ", ";
+                        db.SaveChanges();
                     }
                     else
                     {
-                        gq.GroupName = group;
-                        gq.UserName = username;
-                        dbc.Quests.Add(gq);
-                        dbc.SaveChanges();
+                        ViewBag.Message = "Invalid";
+                        ViewBag.Details = "You are already involved in this quest";
+                        return View();
                     }
+                }
+                else
+                {
+                    gq.GroupName = group;
+                    gq.UserName = username;
+                    db.Quests.Add(gq);
+                    db.SaveChanges();
                 }
                 return RedirectToAction("Quests");
             }
